@@ -1,6 +1,7 @@
 package facades;
 
 import dto.ContactDTO;
+import dto.ContactsDTO;
 import dto.PersonDTO;
 import entities.Contact;
 import errorhandling.MissingInputException;
@@ -70,4 +71,20 @@ public class ContactFacade {
         }
         return new ContactDTO(newContact);
     }
+
+    public ContactsDTO getAllContacts() throws NotFoundException {
+        EntityManager em = emf.createEntityManager();
+        ContactsDTO cDTO;
+
+        try {
+            cDTO = new ContactsDTO(em.createQuery("SELECT p FROM Contact p").getResultList());
+            System.out.println(cDTO.getAll());
+        } catch (Exception e) {
+            throw new NotFoundException("No connection to the database");
+        } finally {
+            em.close();
+        }
+        return cDTO;
+    }
+
 }
