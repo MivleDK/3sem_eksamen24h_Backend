@@ -78,7 +78,6 @@ public class ContactFacade {
 
         try {
             cDTO = new ContactsDTO(em.createQuery("SELECT p FROM Contact p").getResultList());
-            System.out.println(cDTO.getAll());
         } catch (Exception e) {
             throw new NotFoundException("No connection to the database");
         } finally {

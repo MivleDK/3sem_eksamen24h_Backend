@@ -2,7 +2,8 @@ package dto;
 
 import entities.Contact;
 import entities.Opportunity;
-import java.util.Date;
+import entities.OpportunityStatus;
+import java.util.List;
 
 public class OpportunityDTO {
 
@@ -10,12 +11,16 @@ public class OpportunityDTO {
     private double amount;
     private String closeDate;
     private Contact contact;
+    private String opStatus;
+    
 
     public OpportunityDTO(Opportunity opportunity) {
         this.name = opportunity.getName();
         this.amount = opportunity.getAmount();
         this.closeDate = opportunity.getCloseDate();
         this.contact = opportunity.getContact();
+        this.opStatus = opportunity.getStatus().getStatusName();
+        
     }
 
     public String getName() {

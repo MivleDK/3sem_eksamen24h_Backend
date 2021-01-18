@@ -1,11 +1,12 @@
 package facades;
 
 import dto.ContactDTO;
-import dto.ContactOpportunitiesDTO;
+import dto.OpportunitiesDTO;
 import dto.OpportunityDTO;
 import entities.Contact;
 import entities.Opportunity;
 import errorhandling.NotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -79,7 +80,6 @@ public class OpportunityFacade {
 
     public ContactDTO getOpportunityByEmail(String email) throws NotFoundException {
         EntityManager em = emf.createEntityManager();
-        ContactOpportunitiesDTO coDTO;
         Contact contact;
 
         try {
@@ -93,4 +93,16 @@ public class OpportunityFacade {
         return new ContactDTO(contact);
     }
 
+   public OpportunitiesDTO getAllOpportunities() throws NotFoundException{
+       EntityManager em = emf.createEntityManager();
+       OpportunitiesDTO opDTO;
+       try {
+           opDTO = new OpportunitiesDTO(em.createQuery("SELECT o FROM Opportunity o").getResultList());
+       } catch (Exception e) {
+           throw new NotFoundException("No connection to the database");
+       } finally{
+           em.close();
+       }
+       return opDTO;
+   }
 }

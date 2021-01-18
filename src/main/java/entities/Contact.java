@@ -72,7 +72,7 @@ public class Contact implements Serializable {
         }
         List<String> opportunityStrings = new ArrayList<>();
         opportunityList.forEach((o) -> {
-            opportunityStrings.add(o.getId() + ": " + o.getName());
+            opportunityStrings.add("Status: " + o.getStatus().getStatusName() + ": " + o.getName());
         });
         return opportunityStrings;
     }
