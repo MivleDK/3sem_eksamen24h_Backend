@@ -101,4 +101,25 @@ public class ContactFacade {
         return new ContactDTO(contact);
     }
 
+    public String editContact(ContactDTO cDTO) throws NotFoundException {
+        EntityManager em = emf.createEntityManager();
+        Contact contact = em.find(Contact.class, cDTO.getEmail());
+        if (contact == null) {
+            throw new NotFoundException("No contact with that email found");
+        }
+        contact.setName(cDTO.getName());
+        contact.setCompany(cDTO.getCompany());
+        contact.setJobTitle(cDTO.getJobTitle());
+        contact.setPhone(cDTO.getPhone());
+
+        try {
+            em.getTransaction().begin();
+            em.merge(contact);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return "Update OK";
+    }
+
 }
