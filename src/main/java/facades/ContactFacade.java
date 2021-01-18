@@ -87,4 +87,18 @@ public class ContactFacade {
         return cDTO;
     }
 
+    public ContactDTO getContact(String email) throws NotFoundException {
+        EntityManager em = emf.createEntityManager();
+        Contact contact;
+        try {
+            contact = em.find(Contact.class, email);
+            if (contact == null) {
+                throw new NotFoundException("No contact with that email found");
+            }
+        } finally {
+            em.close();
+        }
+        return new ContactDTO(contact);
+    }
+
 }
