@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dto.ContactDTO;
 import dto.HobbyDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
@@ -54,5 +55,14 @@ public class ContactResource {
     @Path("count")
     public int allContacts() {
         return FACADE.getContactCount();
+    }
+
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String addContact(String contact) throws Exception {
+        ContactDTO c = GSON.fromJson(contact, ContactDTO.class);
+        ContactDTO newContact = FACADE.addContact(c);
+        return GSON.toJson(newContact);
     }
 }
