@@ -29,13 +29,12 @@ public class ContactFacade {
         return instance;
     }
 
-    public int getContactCount() {
+    public long getContactCount() {
 
         EntityManager em = emf.createEntityManager();
         try {
-            long contactCount = (long) em.createQuery("SELECT COUNT(p) FROM Person p").getSingleResult();
-            int contactCountInt = Math.toIntExact(contactCount);
-            return contactCountInt;
+            long contactCount = (long) em.createQuery("SELECT COUNT(p) FROM Contact p").getSingleResult();
+            return contactCount;
         } finally {
             em.close();
         }

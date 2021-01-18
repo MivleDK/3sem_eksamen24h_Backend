@@ -53,8 +53,8 @@ public class ContactResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("count")
-    public int allContacts() {
-        return FACADE.getContactCount();
+    public String allContactsCount() {
+        return GSON.toJson(FACADE.getContactCount());
     }
 
     @POST
