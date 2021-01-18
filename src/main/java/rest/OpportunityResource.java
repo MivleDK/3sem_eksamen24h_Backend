@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.OpportunitiesDTO;
 import dto.OpportunityDTO;
+import dto.OpportunityStatussesDTO;
 import errorhandling.NotFoundException;
 import facades.OpportunityFacade;
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
@@ -58,14 +60,15 @@ public class OpportunityResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("all")
     public String getAllOpportunities() throws NotFoundException {
-        OpportunitiesDTO opDTO = FACADE.getAllOpportunities();
-        return GSON.toJson(opDTO);
+        OpportunityStatussesDTO opsDTO = FACADE.getAllOpportunities();
+        return GSON.toJson(opsDTO);
     }
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("{email}")
+    @RolesAllowed("admin")
     public Response addOpportunity(String op, @PathParam("email") String email) throws Exception {
         OpportunityDTO opDTO = GSON.fromJson(op, OpportunityDTO.class);
         String response = FACADE.addOpportunity(opDTO, email);

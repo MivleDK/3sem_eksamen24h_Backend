@@ -25,7 +25,7 @@ public class OpportunityStatus implements Serializable {
     private Long id;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "status")
-    private List<Opportunity> name = new ArrayList<>();
+    private List<Opportunity> opportunityList = new ArrayList<>();
 
     private String statusName;
 
@@ -34,19 +34,21 @@ public class OpportunityStatus implements Serializable {
 
     public OpportunityStatus(String status) {
         this.statusName = status;
-//        if (op != null) {
-//            name.add(op);
-//            op.setStatus(this);
-//        }
+    }
 
+    public void addOpportunity(Opportunity opportunity) {
+        if (opportunity != null) {
+            opportunityList.add(opportunity);
+            opportunity.setStatus(this);
+        }
+    }
+
+    public List<Opportunity> getOpportunityList() {
+        return opportunityList;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public OpportunityStatus(List<Opportunity> name) {
-        this.name = name;
     }
 
     public String getStatusName() {
