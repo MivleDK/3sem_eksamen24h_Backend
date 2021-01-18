@@ -1,6 +1,8 @@
 package dto;
 
 import entities.Contact;
+import entities.Opportunity;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactDTO {
@@ -12,6 +14,7 @@ public class ContactDTO {
     private String phone;
 
     private List<String> opportunities;
+  //private List<OpportunityDTO> opportunities2 = new ArrayList<>();
 
     public ContactDTO(Contact contact) {
         this.email = contact.getEmail();
@@ -19,7 +22,17 @@ public class ContactDTO {
         this.company = contact.getCompany();
         this.jobTitle = contact.getJobTitle();
         this.phone = contact.getPhone();
+        this.opportunities = contact.getOpportunitiesAsStringList();
+        //makeOpportunityDTOList(contact);
+
     }
+
+//    public void makeOpportunityDTOList(Contact contact) {
+//        List<Opportunity> opportunities = contact.getOpportunityList();
+//        opportunities.forEach((o -> {
+//            this.opportunities2.add(new OpportunityDTO(o));
+//        }));
+//    }
 
     public String getEmail() {
         return email;

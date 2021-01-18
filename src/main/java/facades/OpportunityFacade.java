@@ -1,5 +1,7 @@
 package facades;
 
+import dto.ContactDTO;
+import dto.ContactOpportunitiesDTO;
 import dto.OpportunityDTO;
 import entities.Contact;
 import entities.Opportunity;
@@ -75,6 +77,22 @@ public class OpportunityFacade {
             em.close();
         }
         return "Opportunity was added to: " + contact.getName();
+    }
+
+    public ContactDTO getOpportunityByEmail(String email) throws NotFoundException {
+        EntityManager em = emf.createEntityManager();
+        ContactOpportunitiesDTO coDTO;
+        Contact contact;
+
+        try {
+            contact = em.find(Contact.class, email);
+            if (contact == null) {
+                throw new NotFoundException("No contact with that email found");
+            }
+        } finally {
+            em.close();
+        }
+        return new ContactDTO(contact);
     }
 
 }
