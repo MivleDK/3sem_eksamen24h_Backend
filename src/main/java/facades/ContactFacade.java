@@ -122,4 +122,21 @@ public class ContactFacade {
         return "Update OK";
     }
 
+    public String deleteContact(ContactDTO cDTO) throws NotFoundException {
+        EntityManager em = emf.createEntityManager();
+        Contact contact = em.find(Contact.class, cDTO.getEmail());
+        if (contact == null) {
+            throw new NotFoundException("No contact with that email found");
+        }
+
+        try {
+            em.getTransaction().begin();
+            em.remove(contact);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return "Contact \"" + contact.getName() + "\" was deleted";
+    }
+
 }
