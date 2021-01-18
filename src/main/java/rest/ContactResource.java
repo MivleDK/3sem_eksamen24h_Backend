@@ -4,30 +4,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.ContactDTO;
 import dto.ContactsDTO;
-import dto.HobbyDTO;
-import dto.PersonDTO;
-import dto.PersonsDTO;
-import entities.Person;
 import errorhandling.NotFoundException;
 import facades.ContactFacade;
-import facades.PersonFacade;
-import java.util.List;
-import javax.annotation.security.RolesAllowed;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import utils.EMF_Creator;
 
@@ -65,6 +53,13 @@ public class ContactResource {
         ContactsDTO cDTO = FACADE.getAllContacts();
         return GSON.toJson(cDTO);
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{email}")
+    public String getContactByEmail(@PathParam("email") String email) throws NotFoundException{
+        return GSON.toJson(FACADE.getContact(email));
+    }
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
@@ -74,4 +69,5 @@ public class ContactResource {
         ContactDTO newContact = FACADE.addContact(c);
         return GSON.toJson(newContact);
     }
+    
 }
