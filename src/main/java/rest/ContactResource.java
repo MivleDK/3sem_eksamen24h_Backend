@@ -9,6 +9,7 @@ import errorhandling.NotFoundException;
 import facades.ContactFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -82,4 +83,13 @@ public class ContactResource {
         return Response.status(Response.Status.OK).entity(updateStatus).build();
     }
 
+    @DELETE
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response deleteContact(String contact) throws NotFoundException{
+        ContactDTO contactDTO = GSON.fromJson(contact, ContactDTO.class);
+        String deleteStatus = FACADE.deleteContact(contactDTO);
+        return Response.status(Response.Status.OK).entity(deleteStatus).build();
+    }    
+    
 }
