@@ -1,6 +1,5 @@
 package entities;
 
-import dto.OpportunityDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +7,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -72,7 +69,7 @@ public class Contact implements Serializable {
         }
         List<String> opportunityStrings = new ArrayList<>();
         opportunityList.forEach((o) -> {
-            opportunityStrings.add(o.getId() + ": " + o.getName());
+            opportunityStrings.add("Status: " + o.getStatus().getStatusName() + ": " + o.getName());
         });
         return opportunityStrings;
     }

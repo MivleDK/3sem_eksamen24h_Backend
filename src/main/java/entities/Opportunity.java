@@ -1,8 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,9 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -43,6 +39,10 @@ public class Opportunity implements Serializable {
     @JoinColumn(name = "contact_id")
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Contact contact;
+    
+    @JoinColumn(name = "status_id")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private OpportunityStatus status;
 
     public Opportunity() {
     }
@@ -51,6 +51,14 @@ public class Opportunity implements Serializable {
         this.name = name;
         this.amount = amount;
         this.closeDate = closeDate;
+    }
+
+    public OpportunityStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OpportunityStatus status) {
+        this.status = status;
     }
 
     public void setContact(Contact contact) {
