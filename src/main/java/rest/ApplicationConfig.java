@@ -28,6 +28,7 @@ public class ApplicationConfig extends Application {
         resources.add(rest.ContactResource.class);
         resources.add(rest.HobbyResource.class);
         resources.add(rest.JokeResource.class);
+        resources.add(rest.OpportunityResource.class);
         resources.add(rest.PersonResource.class);
         resources.add(rest.ScrapeResource.class);
         resources.add(security.JWTAuthenticationFilter.class);
