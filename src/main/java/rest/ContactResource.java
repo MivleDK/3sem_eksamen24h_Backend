@@ -2,6 +2,8 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dto.ContactDTO;
+import dto.ContactsDTO;
 import dto.HobbyDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
@@ -52,7 +54,24 @@ public class ContactResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("count")
-    public int allContacts() {
-        return FACADE.getContactCount();
+    public String allContactsCount() {
+        return GSON.toJson(FACADE.getContactCount());
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("all")
+    public String getAllContacts() throws NotFoundException{
+        ContactsDTO cDTO = FACADE.getAllContacts();
+        return GSON.toJson(cDTO);
+    }
+
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String addContact(String contact) throws Exception {
+        ContactDTO c = GSON.fromJson(contact, ContactDTO.class);
+        ContactDTO newContact = FACADE.addContact(c);
+        return GSON.toJson(newContact);
     }
 }
