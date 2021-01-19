@@ -121,9 +121,9 @@ public class ContactFacade {
         return "Update OK";
     }
 
-    public String deleteContact(ContactDTO cDTO) throws NotFoundException {
+    public ContactDTO deleteContact(String email) throws NotFoundException {
         EntityManager em = emf.createEntityManager();
-        Contact contact = em.find(Contact.class, cDTO.getEmail());
+        Contact contact = em.find(Contact.class, email);
         if (contact == null) {
             throw new NotFoundException("No contact with that email found");
         }
@@ -135,7 +135,7 @@ public class ContactFacade {
         } finally {
             em.close();
         }
-        return "Contact \"" + contact.getName() + "\" was deleted";
+        return new ContactDTO(contact);
     }
 
 }

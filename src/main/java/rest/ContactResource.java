@@ -85,11 +85,10 @@ public class ContactResource {
 
     @DELETE
     @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Response deleteContact(String contact) throws NotFoundException{
-        ContactDTO contactDTO = GSON.fromJson(contact, ContactDTO.class);
-        String deleteStatus = FACADE.deleteContact(contactDTO);
-        return Response.status(Response.Status.OK).entity(deleteStatus).build();
+    @Path("{email}")
+    public String deleteContact(@PathParam("email") String email) throws NotFoundException{
+        ContactDTO cDTO = FACADE.deleteContact(email);
+        return GSON.toJson(cDTO);
     }    
     
 }
